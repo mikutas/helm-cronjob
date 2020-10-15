@@ -1,0 +1,41 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: helm-cronjob
+spec:
+  # 01/01 00:00 JST
+  schedule: "00 15 31 12 *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  jobTemplate:
+    spec:
+      completions: 1
+      parallelism: 1
+      template:
+        spec:
+          containers:
+          - name: helm
+            image: ghcr.io/tkms0106/just-helm:latest
+            args:
+            - "ls"
+          restartPolicy: Never
+          serviceAccountName: helm-cronjob
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: helm-cronjob
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: helm-as-editor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: helm-cronjob
+  namespace: default
