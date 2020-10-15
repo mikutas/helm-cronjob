@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: helm-cronjob
+spec:
+  schedule: 07 09 15 10 *
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: helm
+            args:
+            - ls

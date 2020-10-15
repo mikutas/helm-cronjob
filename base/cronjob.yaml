@@ -3,8 +3,8 @@ kind: CronJob
 metadata:
   name: helm-cronjob
 spec:
-  # 01/01 00:00 JST
-  schedule: "00 15 31 12 *"
+  # 01/01 00:00 JST This is sample
+  schedule: 00 15 31 12 *
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 600
   jobTemplate:
@@ -13,11 +13,28 @@ spec:
       parallelism: 1
       template:
         spec:
+          initContainers:
+          - name: get-chart
+            image: alpine:latest
+            command: ["/bin/sh","-c"]
+            args: ["apk add git && git clone https://${PAT}@github.com/${OWNER}/${REPO} /chart"]
+            volumeMounts:
+            - mountPath: /chart
+              name: chart
+            envFrom:
+            - secretRef:
+                name: helm-cronjob
           containers:
           - name: helm
             image: ghcr.io/tkms0106/just-helm:latest
             args:
-            - "ls"
+            - "version"
+            volumeMounts:
+            - mountPath: /chart
+              name: chart
+          volumes:
+          - name: chart
+            emptyDir: {}
           restartPolicy: Never
           serviceAccountName: helm-cronjob
 ---
