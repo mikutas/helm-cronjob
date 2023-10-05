@@ -26,7 +26,7 @@ spec:
                 name: helm-cronjob
           containers:
           - name: helm
-            image: ghcr.io/mikutas/just-helm:latest
+            image: ghcr.io/mikutas/just-helm:v3.5.3
             args:
             - "version"
             volumeMounts:
