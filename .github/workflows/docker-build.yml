@@ -2,7 +2,9 @@ name: Docker
 
 on:
   pull_request:
-    paths: Dockerfile
+    paths:
+      - Dockerfile
+      - aqua.yaml
 
 env:
   IMAGE_NAME: greeter-server
