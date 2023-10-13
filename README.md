@@ -19,17 +19,17 @@ in `overlay/schedule-and-args.yaml`
 ### Check your CronJob
 
 ```
-kubectl kustomize overlay
+kustomize build overlay
 ```
 
 ### Apply
 
 ```
-kubectl apply -k overlay
+kustomize build overlay | kubectl apply -f -
 ```
 
 ### Delete
 
 ```
-kubectl delete -k overlay
+kustomize build overlay | kubectl delete -f -
 ```
