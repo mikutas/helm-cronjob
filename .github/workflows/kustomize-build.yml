@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: mikutas/my-aqua-installer@v0.2.0
+      - uses: mikutas/my-aqua-installer@v0.2.1
 
       - run: |
           echo PAT=${{ secrets.GITHUB_TOKEN }} > base/secret.env
