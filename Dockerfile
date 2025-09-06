@@ -1,7 +1,7 @@
 FROM debian:12 as aqua
 RUN apt-get update \
  && apt-get install -y curl
-RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v4.0.2/aqua-installer | bash -s -- -v v2.53.10
+RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v4.0.3/aqua-installer | bash -s -- -v v2.53.10
 COPY aqua.yaml /aqua.yaml
 RUN /root/.local/share/aquaproj-aqua/bin/aqua -c /aqua.yaml cp -o /dist helm
 
