@@ -1,4 +1,4 @@
-FROM debian:12 as aqua
+FROM debian:bookworm-20260623 as aqua
 RUN apt-get update \
  && apt-get install -y curl
 RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v4.0.4/aqua-installer | bash -s -- -v v2.60.1
